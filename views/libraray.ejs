@@ -1,0 +1,26 @@
+<%- include('partials/header.ejs') %>
+<div id="page-library" class="page">
+  <div class="lib-header">
+    <h1>LIBRARY</h1>
+    <p>10,000+ books across every category — read in PDF format, anytime, anywhere</p>
+    <div class="lib-search-row">
+      <input type="text" id="search-input" placeholder="Search books, authors, topics..." oninput="filterBooks()"/>
+      <button onclick="filterBooks()">Search</button>
+    </div>
+  </div>
+  <div class="books-grid" id="books-grid">
+    <div class="book-card" onclick="openBook('eat-frog')">
+
+        <div class="book-cover" style="background:#ffc52b22">
+            <span style="font-size:3.6rem">🐸</span>
+            <div class="book-cover-label">Eat That Frog! for Students</div>
+        </div>
+
+        <div class="book-info">
+            <div class="book-title">Eat That Frog! for Students</div>
+            <div class="book-author">Brian Tracy</div>
+        </div>
+    </div>
+</div>
+</div>
+<%- include('partials/footers.ejs') %>

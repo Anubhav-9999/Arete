@@ -1,0 +1,52 @@
+
+<%- include('partials/header.ejs') %>
+<main class="auth-page signup-auth-page">
+  <section class="auth-card signup-card" aria-labelledby="signup-title">
+    <a class="auth-close" href="/" aria-label="Close signup form">&times;</a>
+
+    <h1 id="signup-title">JOIN ARETE</h1>
+    <p class="auth-sub">Start your reading journey. Free forever &mdash; upgrade when ready.</p>
+
+    <form class="auth-form" action="/signup" method="post">
+      <input type="text" name="name" placeholder="Your name" autocomplete="name" required>
+      <input type="email" name="email" placeholder="Email address" autocomplete="email" required>
+      <input type="password" name="password" placeholder="Choose a password" autocomplete="new-password" required>
+
+      <fieldset class="plan-picker">
+        <legend>Choose your plan:</legend>
+
+        <label class="plan-choice">
+          <input type="radio" name="plan" value="explorer" checked>
+          <span>
+            <strong>EXPLORER</strong>
+            <small>Free</small>
+          </span>
+        </label>
+
+        <label class="plan-choice">
+          <input type="radio" name="plan" value="scholar">
+          <span>
+            <strong>SCHOLAR</strong>
+            <small>&#8377;299/mo</small>
+          </span>
+        </label>
+
+        <label class="plan-choice">
+          <input type="radio" name="plan" value="elite">
+          <span>
+            <strong>ELITE</strong>
+            <small>&#8377;799/mo</small>
+          </span>
+        </label>
+      </fieldset>
+
+      <button type="submit">Create Account</button>
+    </form>
+
+    <p class="auth-switch">
+      Already a member? <a href="/login">Sign in</a>
+    </p>
+  </section>
+</main>
+<%- include('partials/footers.ejs') %>
+
