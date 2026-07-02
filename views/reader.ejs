@@ -1,0 +1,23 @@
+<%- include('partials/header.ejs',{isLoggedIn:locals.loginBool}) %>
+
+<main id="page-reader" class="page active">
+  <div class="reader-bar">
+    <button class="reader-back" type="button" onclick="window.location.href='/library'">Back</button>
+    <div class="reader-book-title"><%= content.title %></div>
+  </div>
+
+  <div class="reader-layout reader-layout-single">
+    <section class="reader-main">
+      <article class="reader-content">
+        <h1 class="ch-title"><%= content.title %></h1>
+        <% if (content.error) { %>
+          <div class="reader-error"><%= content.error %></div>
+        <% } else { %>
+          <pre class="book-text"><%= content.materialSrc %></pre>
+        <% } %>
+      </article>
+    </section>
+  </div>
+</main>
+
+<%- include('partials/footers.ejs') %>

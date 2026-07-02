@@ -1,0 +1,25 @@
+<%- include('partials/header.ejs',{isLoggedIn:locals.loginBool}) %>
+<section id="roadmaps">
+  <div class="container">
+    <div class="section-tag">Learning Roadmaps</div>
+    <h2 class="section-title">STRUCTURED PATHS<br>FROM BEGINNER<br>TO ADVANCED.</h2>
+    <p class="section-body">Every roadmap is curated by domain experts. Choose your path and Arete guides you step by step.</p>
+    <div class="roadmaps-grid" id="roadmaps-grid">
+    <!-- get roadmaps from database -->
+    <div class="roadmap-card" onclick="showToast('📚 Finance Master roadmap loaded! Sign in to track progress.','Roadmap')">
+    <div class="rm-icon">💰</div>
+    <div class="rm-title">Finance Master</div>
+    <div class="rm-desc">From savings basics to investing in equity, mutual funds, real estate, and tax planning.</div>
+    <div class="rm-levels">
+        <span class="rm-level lv-b">Beginner</span>
+        <span class="rm-level lv-i">Intermediate</span>
+        <span class="rm-level lv-a">Advanced</span>
+    </div>
+    <div class="rm-books">
+        18 books · Curated by experts
+    </div>
+</div>
+    </div>
+  </div>
+</section>
+<%- include('partials/footers.ejs')%>

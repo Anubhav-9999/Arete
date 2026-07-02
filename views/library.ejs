@@ -1,0 +1,31 @@
+<%- include('partials/header.ejs',{isLoggedIn:locals.loginBool}) %>
+<div id="page-library" class="page active">
+  <div class="lib-header">
+    <h1>LIBRARY</h1>
+    <p>10,000+ books across every category - read in PDF format, anytime, anywhere</p>
+    <form class="lib-search-row" action="/library" method="POST">
+      <input type="text" id="search-input" name="query" placeholder="Search books, authors, topics..."/>
+      <select id="search-by" name="searchBy" aria-label="Search by">
+        <option value="title">Search by title</option>
+        <option value="author">Search by author</option>
+        <option value="topic">Search by topic</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+  <div class="books-grid" id="books-grid">
+    <% for (const book of books) {%>
+    <div class="book-card" onclick="window.location.href='/books/<%= book.id %>'">
+      <div class="book-cover" style="background:#ffc52b22">
+        <img src="<%= book.cover_page %>" alt="<%= book.title %> cover" class="book-cover-img">
+        <div class="book-cover-label"></div>
+      </div>
+      <div class="book-info">
+        <div class="book-title"><%= book.title %></div>
+        <div class="book-author"><%= book.author %></div>
+      </div>
+    </div>
+   <% }%> 
+  </div>
+</div>
+<%- include('partials/footers.ejs') %>

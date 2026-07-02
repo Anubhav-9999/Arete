@@ -1,0 +1,167 @@
+<%- include('partials/header.ejs',{isLoggedIn:locals.loginBool}) %>
+  <div id="page-dashboard" class="page active">
+    <div class="dash-header">
+      <h1>MY DASHBOARD</h1>
+      <p id="dash-greeting">Welcome back, Reader! Keep your streak alive 🔥</p>
+    </div>
+    <div class="dash-grid">
+      <div class="dc c-g">
+        <div class="dcl">Total XP</div>
+        <div class="dcv" id="dash-xp">340</div>
+        <div class="dcs">Level 7 · Scholar</div>
+      </div>
+      <div class="dc c-o">
+        <div class="dcl">Day Streak</div>
+        <div class="dcv">🔥 14</div>
+        <div class="dcs">Personal best: 21 days</div>
+      </div>
+      <div class="dc">
+        <div class="dcl">Books Read</div>
+        <div class="dcv">7</div>
+        <div class="dcs">+2 this month</div>
+      </div>
+      <div class="dc">
+        <div class="dcl">Coin Balance</div>
+        <div class="dcv" id="dash-coins">🪙 340</div>
+        <div class="dcs" id="coins-sub">+60 earned today</div>
+      </div>
+    </div>
+    <div class="activity-area">
+      <h2>ACTIVITY</h2>
+      <div class="act-grid">
+        <div class="act-card weekly-reading-card">
+          <h3>WEEKLY READING</h3>
+          <div class="week-bars" id="week-bars">
+            <div class="day-bar">
+              <div class="day-fill" style="height:40%"></div>
+              <div class="day-lbl">
+                Mon
+                <br>
+                <small style="color:var(--c3);font-size:.56rem">22p</small>
+              </div>
+            </div>
+            <div class="day-bar">
+              <div class="day-fill" style="height:63.63636363636363%"></div>
+              <div class="day-lbl">
+                Tue
+                <br>
+                <small style="color:var(--c3);font-size:.56rem">35p</small>
+              </div>
+            </div>
+
+            <div class="day-bar">
+              <div class="day-fill" style="height:32.72727272727273%"></div>
+
+              <div class="day-lbl">
+                Wed
+                <br>
+                <small style="color:var(--c3);font-size:.56rem">18p</small>
+              </div>
+            </div>
+ <div class="day-bar">
+    <div class="day-fill" style="height:76.36363636363637%"></div>
+
+    <div class="day-lbl">
+        Thu
+        <br>
+        <small style="color:var(--c3);font-size:.56rem">42p</small>
+    </div>
+</div>
+
+<div class="day-bar">
+    <div class="day-fill" style="height:54.54545454545454%"></div>
+
+    <div class="day-lbl">
+        Fri
+        <br>
+        <small style="color:var(--c3);font-size:.56rem">30p</small>
+    </div>
+</div>
+
+<div class="day-bar">
+    <div class="day-fill" style="height:100%"></div>
+
+    <div class="day-lbl">
+        Sat
+        <br>
+        <small style="color:var(--c3);font-size:.56rem">55p</small>
+    </div>
+</div>
+
+<div class="day-bar">
+    <div class="day-fill" style="height:50.90909090909091%"></div>
+
+    <div class="day-lbl">
+        Sun
+        <br>
+        <small style="color:var(--c3);font-size:.56rem">28p</small>
+    </div>
+</div>
+          </div>
+        <p class="weekly-pages">Pages this week: <strong>184</strong></p>
+        <div class="roadmap-progress weekly-roadmap">
+          <div class="rp-title">Finance Path · Level 2</div>
+          <div class="rp-sub">Intermediate — 4 of 12 books complete</div>
+          <div class="rp-track">
+            <div class="rp-fill" style="width:33%"></div>
+          </div>
+          <div class="rp-pct">33% complete</div>
+        </div>
+        </div>
+      <div class="act-card">
+        <h3>GLOBAL LEADERBOARD</h3>
+        <div id="leaderboard">
+    <!-- leaderboard updates from server -->
+      <div class="lb-item">
+    <div class="lb-rank g">#1</div>
+    <div class="lb-av" style="background:#f5a62325;color:#f5a623">PS</div>
+    <div class="lb-name">Priya Sharma</div>
+    <div class="lb-xp">4,200 XP</div>
+</div>
+        </div>
+      </div>
+      <div class="act-card">
+        <h3>RECENT ACTIVITY</h3>
+        <div id="recent-activity">
+    <!-- activity updates from server -->
+    <div class="act-item">
+    <div class="act-icon">📖</div>
+    <div class="act-text">Finished <strong>Chapter 2</strong> of Eat That Frog!</div>
+    <div class="act-time">2h ago</div>
+</div>
+        </div>
+      </div>
+      <div class="act-card">
+        <h3>CURRENT BOOK</h3>
+        <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px">
+          <div
+            style="width:56px;height:76px;background:var(--c1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0">
+            🐸</div>
+          <div>
+            <div style="font-weight:600;font-size:.86rem;margin-bottom:2px">Eat That Frog! for Students</div>
+            <div style="font-size:.74rem;color:var(--muted);margin-bottom:8px">Brian Tracy &amp; Anna Leinberger</div>
+            <div style="height:4px;background:var(--border);border-radius:100px;overflow:hidden;margin-bottom:5px">
+              <div style="height:100%;width:32%;background:var(--c3);border-radius:100px"></div>
+            </div>
+            <div style="font-size:.68rem;color:var(--muted)">Chapter 3 of 22 · 32% complete</div>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;text-align:center;padding:11px"
+          onclick="showPage('reader')">Continue Reading →</button>
+        <div class="coin-row" style="margin-top:12px">
+          <div class="coin-ico">🪙</div>
+          <div>
+            <div class="coin-val" id="dc2">340</div>
+            <div class="coin-sub">Coin Balance</div>
+          </div>
+        </div>
+        <div class="quiz-card">
+          <h3>BIWEEKLY QUIZ</h3>
+          <p>Chapters 1-3 quiz is ready. Test your knowledge and earn bonus XP!</p>
+          <button onclick="showToast('🎯 Quiz unlocked! Complete Chapter 4 first.','Quiz')">Take Quiz →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <%- include('partials/footers.ejs')%>

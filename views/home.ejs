@@ -1,0 +1,167 @@
+<%- include('partials/header.ejs',{isLoggedIn:locals.loginBool}) %>
+<div id="page-home" class="page active">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><div class="p"></div>Welcome to Arete</div>
+    <h1 class="hero-title">READ MORE.<br><span class="line2">BECOME MORE.</span></h1>
+    <p class="hero-desc">Arete is an AI-powered learning platform with blockchain-authenticated progress, gamified reading, mentorship, and real-world rewards.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openModal('signup')">Start Free Today</button>
+      <button class="btn-ghost" onclick="showPage('library')">Explore Library →</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hs-num">10K+</div><div class="hs-label">eBooks</div></div>
+    <div class="hero-stat"><div class="hs-num">47K</div><div class="hs-label">Readers</div></div>
+    <div class="hero-stat"><div class="hs-num">22</div><div class="hs-label">Techniques</div></div>
+    <div class="hero-stat"><div class="hs-num">4.9★</div><div class="hs-label">Rating</div></div>
+    <div class="hero-stat"><div class="hs-num">FREE</div><div class="hs-label">To Start</div></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="mq"></div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="features-intro">
+      <div><div class="section-tag">Platform Features</div><h2 class="section-title">EVERYTHING<br>YOU NEED TO<br>LEVEL UP.</h2></div>
+      <p class="section-body" style="max-width:310px;align-self:flex-end">From Inshorts-style summaries to deep-dive courses — Arete meets you wherever you are in your learning journey.</p>
+    </div>
+    <div class="cards-bento">
+      <div class="bento-card bc-o tall"><div><div class="bc-icon">📚</div><div class="bc-label">Core Feature</div><div class="bc-title">MASSIVE eBOOK LIBRARY</div><div class="bc-desc">10,000+ books across self-help, finance, ML, spirituality &amp; more. PDF format, read anywhere.</div></div><div class="bc-big">📚</div></div>
+      <div class="bento-card bc-p"><div class="bc-icon">⚡</div><div><div class="bc-label">Quick Read</div><div class="bc-title">INSHORTS SUMMARIES</div></div></div>
+      <div class="bento-card bc-g"><div class="bc-icon">🔥</div><div><div class="bc-label">Habit</div><div class="bc-title">STREAK SYSTEM</div></div><div class="bc-big">🔥</div></div>
+      <div class="bento-card bc-dk wide"><div class="bc-icon">🎯</div><div><div class="bc-label">Consistency</div><div class="bc-title">GOAL OF THE WEEK TRACKER</div><div class="bc-desc">Set reading goals with time-based progress bars, smart warnings, and community celebrations.</div></div></div>
+      <div class="bento-card bc-pk"><div class="bc-icon">📝</div><div><div class="bc-label">Knowledge</div><div class="bc-title">DIGITAL NOTES</div></div></div>
+      <div class="bento-card bc-a"><div class="bc-icon">📊</div><div><div class="bc-label">Assessment</div><div class="bc-title">BIWEEKLY QUIZZES</div><div class="bc-desc">Test knowledge, compete with peers, climb the leaderboard every two weeks.</div></div></div>
+      <div class="bento-card bc-b"><div class="bc-icon">🎓</div><div><div class="bc-label">Mentorship</div><div class="bc-title">FREE + PAID COACHING</div><div class="bc-desc">Experts across finance, ML, self-defence, academics. Free to start.</div></div></div>
+      <div class="bento-card bc-l"><div class="bc-icon">🎶</div><div><div class="bc-label">Immersive</div><div class="bc-title">BOOK WRAPPED MODE</div></div><div class="bc-big">🎶</div></div>
+      <div class="bento-card bc-t"><div class="bc-icon">⛓️</div><div><div class="bc-label">Patent Tech</div><div class="bc-title">BLOCKCHAIN RECORDS</div><div class="bc-desc">Tamper-proof, verifiable learning credentials on a distributed ledger.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="how-grid">
+      <div>
+        <div class="section-tag">How It Works</div>
+        <h2 class="section-title">YOUR GROWTH IN FIVE STEPS.</h2>
+        <div class="steps">
+          <div class="step"><div class="step-num">01</div><div><h4>SIGN UP & GET COINS</h4><p>New users receive a generous coin bonus that tapers over time — rewarding early commitment. Coins unlock premium content and rewards.</p></div></div>
+          <div class="step"><div class="step-num">02</div><div><h4>PICK YOUR ROADMAP</h4><p>Choose from structured learning paths — finance, ML, self-help, spirituality, academics. Guided from beginner to advanced.</p></div></div>
+          <div class="step"><div class="step-num">03</div><div><h4>READ, QUIZ & LEVEL UP</h4><p>Earn XP with every book and quiz. Unlock badges, climb the global leaderboard, and challenge fellow readers.</p></div></div>
+          <div class="step"><div class="step-num">04</div><div><h4>AI TRACKS YOUR GROWTH</h4><p>Our cognitive feedback engine monitors focus, comprehension, and fatigue — personalizing every session in real time.</p></div></div>
+          <div class="step"><div class="step-num">05</div><div><h4>GET REWARDED</h4><p>Earn merchandise, scholarships, blockchain-certified badges, and compete for the annual Reader of the Year award.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-streak"><div class="ps-num">🔥 14</div><div class="ps-lbl">Day Reading Streak</div></div>
+            <div class="wcard o"><div class="wc-ico">📖</div><div><div class="wc-lbl">Now Reading</div><div class="wc-val">Eat That Frog!</div><div class="wc-sub">72% · Brian Tracy</div></div></div>
+            <div class="wcard p"><div class="wc-ico">🏆</div><div><div class="wc-lbl">Global Rank</div><div class="wc-val">#47 Worldwide</div><div class="wc-sub">Top 0.5% of readers</div></div></div>
+            <div class="wcard g"><div class="wc-ico">🎯</div><div><div class="wc-lbl">Week Goal</div><div class="wc-val">3 of 5 Chapters</div><div class="wc-sub">2 chapters to target</div></div></div>
+            <div class="wcard a"><div class="wc-ico">🪙</div><div><div class="wc-lbl">Coin Balance</div><div class="wc-val">340 Coins</div><div class="wc-sub">+60 earned today</div></div></div>
+            <div class="xp-row"><div class="xp-top"><span>Level 7 · Scholar</span><span>2,650/4,000 XP</span></div><div class="xp-track"><div class="xp-fill" style="width:66%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI ENGINE SECTION -->
+<section id="ai-section">
+  <div class="container">
+    <div class="ai-grid">
+      <div>
+        <div class="section-tag" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)">AI & Patent Technology</div>
+        <h2 class="section-title" style="color:var(--white)">POWERED BY<br>COGNITIVE AI.</h2>
+        <p class="section-body" style="color:rgba(255,255,255,.38)">Our system combines multi-sensor cognitive feedback, ML classifiers, and blockchain integrity to deliver a truly adaptive learning experience.</p>
+        <div class="ai-feats">
+          <div class="ai-feat"><div class="af-ico" style="background:rgba(255,92,43,.15)">🧠</div><div><h4>REAL-TIME COGNITIVE MONITORING</h4><p>Tracks reading pace, attention span, gaze stability, and comprehension rate — detecting distraction versus deep focus every session.</p></div></div>
+          <div class="ai-feat"><div class="af-ico" style="background:rgba(31,215,96,.1)">🔄</div><div><h4>ADAPTIVE CONTENT ENGINE</h4><p>When fatigue is detected, content difficulty auto-adjusts. The system switches format — text to visual, or launches a micro-quiz to re-engage.</p></div></div>
+          <div class="ai-feat"><div class="af-ico" style="background:rgba(124,92,245,.15)">⛓️</div><div><h4>BLOCKCHAIN-BACKED PROGRESS</h4><p>Every achievement is cryptographically hashed and stored on an immutable ledger — tamper-proof and verifiable by institutions.</p></div></div>
+          <div class="ai-feat"><div class="af-ico" style="background:rgba(74,158,255,.12)">🔒</div><div><h4>FEDERATED LEARNING & GDPR</h4><p>Federated learning keeps your data on-device. Only anonymized model updates are shared — privacy-first and compliant with GDPR.</p></div></div>
+        </div>
+        <div class="patent-strip">⚖ Filed Oct 16, 2025 · Anubhav Kumar</div>
+      </div>
+      <div>
+        <div class="ai-panel">
+          <div class="ai-panel-header"><div class="ai-panel-title">ARETE AI ENGINE</div><div class="live-dot">Live</div></div>
+          <div class="ai-row"><div class="ai-dot d-g"></div><div><strong>Engagement Sensor</strong><span>Reading pace: 280 wpm · Gaze: Stable · State: FOCUSED</span></div></div>
+          <div class="ai-row"><div class="ai-dot d-o"></div><div><strong>ML Classifier</strong><span>Engagement: HIGH · Confidence: 94.2% · Fatigue: LOW</span></div></div>
+          <div class="ai-row"><div class="ai-dot d-p"></div><div><strong>Adaptive Content Engine</strong><span>Action: CONTINUE → Unlock next chapter · Reward +40 XP</span></div></div>
+          <div class="ai-row"><div class="ai-dot d-pk"></div><div><strong>Cognitive Feedback Loop</strong><span>Sentiment: POSITIVE · Comprehension latency: 1.2s · Focus: 92%</span></div></div>
+          <div class="ai-row"><div class="ai-dot d-b"></div><div><strong>Blockchain Ledger</strong><span>Progress hash: 0x4f9a…c2d1 · Immutable · Verified ✓</span></div></div>
+          <div class="ai-stats">
+            <div class="ai-stat"><div class="sv g">92%</div><div class="sk">Attention</div></div>
+            <div class="ai-stat"><div class="sv o">A+</div><div class="sk">Comprehension</div></div>
+            <div class="ai-stat"><div class="sv p">+340</div><div class="sk">XP Today</div></div>
+            <div class="ai-stat"><div class="sv b">LOW</div><div class="sk">Fatigue</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ARETE -->
+<section id="usp">
+  <div class="container">
+    <div class="usp-header">
+      <div class="section-tag">Why Arete</div>
+      <h2 class="section-title" style="color:var(--white)">BUILT DIFFERENT.<br>BUILT TO LAST.</h2>
+      <p class="section-body" style="color:rgba(255,255,255,.32);margin:0 auto">Six pillars that make Arete the most holistic reading and growth platform available today.</p>
+    </div>
+    <div class="usp-list">
+      <div class="usp-row"><div class="usp-idx">01</div><div><h3>FREE + PAID MENTORSHIP</h3><div class="usp-tag t-o">Multi-Domain</div></div><p>Expert guidance across finance, ML, self-defence, academics, and spiritual growth. Start free, go deeper with premium packages.</p></div>
+      <div class="usp-row"><div class="usp-idx">02</div><div><h3>GAMIFIED LEARNING ENGINE</h3><div class="usp-tag t-g">XP · Badges · Ranks</div></div><p>A full level-up system tied to book completion and quiz performance. Compete, collaborate, and grow through consistency.</p></div>
+      <div class="usp-row"><div class="usp-idx">03</div><div><h3>COMMUNITY-FIRST DESIGN</h3><div class="usp-tag t-p">Study Circles</div></div><p>Reader matchmaking, study circles, group challenges, and biweekly contests. Arete is built on the belief that learning is better together.</p></div>
+      <div class="usp-row"><div class="usp-idx">04</div><div><h3>REAL-WORLD REWARDS</h3><div class="usp-tag t-a">Merch · Scholarships</div></div><p>Merchandise, the annual Reader of the Year scholarship, collectible badges, and internship opportunities.</p></div>
+      <div class="usp-row"><div class="usp-idx">05</div><div><h3>HOLISTIC GROWTH</h3><div class="usp-tag t-b">Mind · Spirit · Career</div></div><p>Mental, academic, and spiritual education combined — including ISKCON collaboration, research paper opportunities, and professional training.</p></div>
+      <div class="usp-row"><div class="usp-idx">06</div><div><h3>AI-POWERED TRACKING</h3><div class="usp-tag t-pk">AI-POWERED</div></div><p>Smart analytics, real-time cognitive monitoring, blockchain-authenticated progress records — tamper-proof and verifiable by institutions.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REWARDS -->
+<section id="rewards-section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:36px"><div class="section-tag">Rewards & Recognition</div><h2 class="section-title">READING HAS<br>REAL REWARDS.</h2><p class="section-body" style="margin:0 auto">Milestone-based incentives that make every page you turn genuinely worth it.</p></div>
+    <div class="rewards-grid">
+      <div class="rcard"><div class="r-ico">🏆</div><h4>Reader of the Year</h4><p>Annual scholarship for the most consistent, high-performing reader on the platform.</p></div>
+      <div class="rcard"><div class="r-ico">👕</div><h4>Arete Merchandise</h4><p>Earn exclusive hoodies, notebooks, and stationery at major reading milestones.</p></div>
+      <div class="rcard"><div class="r-ico">🌟</div><h4>Global Rating</h4><p>Build a universal reader profile visible to mentors, authors, and institutions worldwide.</p></div>
+      <div class="rcard"><div class="r-ico">🪙</div><h4>Coin Economy</h4><p>New users get bigger coin bonuses that taper over time — rewarding early commitment.</p></div>
+      <div class="rcard"><div class="r-ico">🏅</div><h4>Achievement Badges</h4><p>Collect NFT-style badges for streaks, genres mastered, quizzes aced, and community impact.</p></div>
+      <div class="rcard"><div class="r-ico">✍️</div><h4>Research Opportunities</h4><p>Top contributors get to publish research papers under the Arete platform.</p></div>
+      <div class="rcard"><div class="r-ico">📡</div><h4>Author Meetups</h4><p>Exclusive video calls and Q&As with authors, thought leaders, and ISKCON speakers.</p></div>
+      <div class="rcard"><div class="r-ico">💼</div><h4>Internship Access</h4><p>Live webcam internship sessions and career opportunities for Elite Scholar members.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="cta-title">YOUR EVOLUTION<br>BEGINS TODAY.</h2>
+  <p class="cta-sub">Join thousands of readers using Arete to grow smarter, read consistently, and become the best version of themselves.</p>
+  <div class="cta-pills"><div class="pill">Free to join</div><div class="pill">10,000+ eBooks</div><div class="pill">AI-powered insights</div><div class="pill">Blockchain certified</div><div class="pill">Real rewards</div></div>
+  <button class="btn-dark" onclick="openModal('signup')">Start Reading Free →</button>
+</section>
+
+<!-- TICKER -->
+<div class="footer-ticker">
+  <div class="ticker-track" id="ticker-track"></div>
+</div>
+
+<%- include('partials/footers.ejs') %>

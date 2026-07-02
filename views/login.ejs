@@ -1,0 +1,24 @@
+<%- include('partials/header.ejs',{isLoggedIn:locals.loginBool}) %>
+
+<main class="auth-page">
+  <section class="auth-card" aria-labelledby="signup-title">
+    <a class="auth-close" href="/" aria-label="Close signup form">&times;</a>
+
+    <h1 id="signup-title">WELCOME BACK</h1>
+    <p class="auth-sub">
+      Sign in to continue your reading journey and keep your streak alive &#128293;
+    </p>
+
+    <form class="auth-form" action="/login" method="post">
+      <input type="email" name="email" placeholder="Email address" autocomplete="email" required>
+      <input type="password" name="password" placeholder="Password" autocomplete="new-password" required>
+      <button type="submit">Log in</button>
+    </form>
+
+    <p class="auth-switch">
+      Already have an account? <a href="/signup">Sign in &rarr;</a>
+    </p>
+  </section>
+</main>
+
+<%- include('partials/footers.ejs') %>
