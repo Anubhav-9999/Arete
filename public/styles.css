@@ -463,3 +463,26 @@ footer{background:var(--black);padding:64px 40px 0}
   .plan-picker{grid-template-columns:1fr}
   .plan-choice span{height:62px}
 }
+.reader-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+.reader-progress-track {
+    flex: 1;
+    max-width: 240px;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-left: auto;
+  }
+
+.reader-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #4f46e5;
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }

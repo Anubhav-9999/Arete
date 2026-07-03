@@ -1,28 +1,16 @@
 import express from "express";
 import bodyParser from "body-parser";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import pg from "pg";
 import bcrypt from "bcrypt"
 import 'dotenv/config';
-import session from "express-session";
-import passport from "passport";
-
-
-
 const app = express();
 const port = 3000;
 const saltRounds=10;
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  secret:process.env.SESSIONSECRET,
-  resave:false,
-  saveUninitialized:true
-}))
-app.use(passport.initialize());
-app.use(passport.session())
-
+app.use(express.json());
 
 
 const db = new pg.Client({
@@ -32,7 +20,7 @@ const db = new pg.Client({
   password: process.env.POSTGRESQLPASSWORD,
   port: 5432,
 });
-db.connect();
+db.connect(); 
 const isloggedin=true
 app.get("/", (req, res) => {
  res.render("home.ejs",{loginBool:isloggedin})
@@ -79,7 +67,6 @@ app.get("/books/:id", async (req,res)=>{
     title:bookData.data.title,
      materialSrc:bookcontent.data
   }
-  console.log(bookcontent.data)
   res.render("reader.ejs",{content:dataSend,loginBool:isloggedin})
 })
 
@@ -126,6 +113,15 @@ app.post("/login",async (req, res) => {
   }
 });
 
+app.post("/increasexp",async (req,res)=>{
+  const xptoadd=req.body.xp;
+  try {
+    const addingXp=db.query("UPDATE users SET xp=xp+$1 WHERE id=2;",[xptoadd]);
+  } catch (error) {
+    console.log(err)
+  }
+  res.sendStatus(200)
+})
 app.get("/login", (req, res) => {
   res.render("login.ejs",{loginBool:isloggedin})
 });

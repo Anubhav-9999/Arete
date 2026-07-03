@@ -4,6 +4,9 @@
   <div class="reader-bar">
     <button class="reader-back" type="button" onclick="window.location.href='/library'">Back</button>
     <div class="reader-book-title"><%= content.title %></div>
+    <div class="reader-progress-track" id="reader-progress-track">
+      <div class="reader-progress-fill" id="reader-progress-fill" style="width: 0%;"></div>
+    </div>
   </div>
 
   <div class="reader-layout reader-layout-single">
@@ -20,4 +23,62 @@
   </div>
 </main>
 
+<style>
+
+</style>
+
+<script>
+const reader = document.querySelector(".reader-content");
+const progressFill = document.getElementById("reader-progress-fill");
+let readerProgress = 0;
+
+function bumpReaderProgress(step = 10) {
+  readerProgress = Math.min(100, readerProgress + step);
+  if (progressFill) {
+    progressFill.style.width = readerProgress + "%";
+  }
+}
+
+let openTime = new Date();
+let totalTime=0
+let lastLoggedDecile = -1;
+
+if (reader) {
+  window.addEventListener("scroll", async () => {
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+    if (scrollHeight <= 0) {
+      return;
+    }
+
+    const scrollPercentage = (window.scrollY / scrollHeight) * 100;
+    const currentDecile = Math.floor(scrollPercentage / 10);
+
+    if (currentDecile !== lastLoggedDecile) {
+      lastLoggedDecile = currentDecile;
+      console.log(scrollPercentage);
+      let timeNow=new Date();
+      let timeGap=Math.floor((timeNow-openTime)/1000);
+      if (timeGap>=60) {
+      openTime=timeNow;
+      console.log(timeGap);
+      try {
+        const response = await fetch("/increasexp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ xp: 20 })
+        });
+        console.log(response.status);
+        bumpReaderProgress(10);
+      } catch (error) {
+        console.error("Failed to increase XP", error);
+      } 
+      }
+
+    }
+  });
+}
+</script>
 <%- include('partials/footers.ejs') %>
