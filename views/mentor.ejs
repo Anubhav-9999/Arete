@@ -5,28 +5,25 @@
     <p>Expert guidance across finance, ML, self-defence, academics, spirituality — free and paid sessions available</p>
   </div>
   <div class="mentor-grid" id="mentor-grid">
+<% if (locals.mentors) { %>
+<% locals.mentors.forEach((mentor)=>{%>
 <div class="mentor-card">
     <div class="mc-top">
-        <div class="mc-avatar" style="background:#f5a62322;color:#f5a623;font-size:1.5rem;">👨‍💼</div>
-        <div>
-            <div class="mc-name">Dr. Priya Sharma</div>
-            <div class="mc-role">Finance & Investing Expert</div>
+        <div class="mc-avatar" style="background:#f5a62322;color:#f5a623;font-size:1.5rem;">👤</div>
+        <div style="gap:10px;display:inline-block;">
+            <div class="mc-name"><%= mentor.name %></div>
+            <div class="mc-role"><%= mentor.profession %></div>
         </div>
     </div>
-
     <div class="mc-tags"></div>
-
-    <div class="mc-rating">⭐ 4.9 rating</div>
-
-    <div class="mc-price">
-        Free / ₹499
-        <span class="mc-free">FREE available</span>
+    <div class="mc-meta" style="display:flex;align-items:center;gap:150px;">
+        <div class="mc-rating">⭐<%=mentor.rating %></div>
+        <div class="mc-price">₹<%= mentor.price %></div>
     </div>
-
-    <button class="mc-btn free" onclick="bookMentor('Dr. Priya Sharma','true')">
-        Book Free Session
-    </button>
+    <button class="mc-btn free" onclick="bookMentor('Dr. Priya Sharma','true')"> Book Session</button>
 </div>
+<% }) %>
+<% } %>
   </div>
 </div>
 <%- include('partials/footers.ejs')%>
