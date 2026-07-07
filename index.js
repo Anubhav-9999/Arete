@@ -4,6 +4,8 @@ import axios, { isAxiosError } from "axios";
 import pg from "pg";
 import bcrypt from "bcrypt"
 import 'dotenv/config';
+import jwt from "jsonwebtoken"
+import cookieParser from "cookie-parser"
 const app = express();
 const port = 3000;
 const saltRounds=10;
@@ -11,7 +13,7 @@ const saltRounds=10;
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(cookieParser())
 
 const db = new pg.Client({
   user: "postgres",
@@ -21,29 +23,48 @@ const db = new pg.Client({
   port: 5432,
 });
 db.connect(); 
-const isloggedin=true
-app.get("/", (req, res) => {
- res.render("home.ejs",{loginBool:isloggedin})
+let isloggedin=false
+app.get("/", authenticateToken,(req, res) => {
+  if (req.user) {
+    return res.render("home.ejs",{loginBool:true})
+  } else {
+    return res.render("home.ejs",{loginBool:false})
+  }
 });
 
-app.get("/dashboard", (req, res) => {
- res.render("dashboard.ejs",{loginBool:isloggedin})
+app.get("/dashboard", authenticateToken,(req, res) => {
+  if (req.user) {
+    return res.render("dashboard.ejs",{loginBool:true})
+  } else {
+    return res.redirect("/signup")
+  }
 });
 
 
-app.get("/mentor", (req, res) => {
- res.render("mentor.ejs",{loginBool:isloggedin})
+app.get("/mentor",authenticateToken,async (req, res) => {
+  const mentorList=await db.query("SELECT * FROM mentors")
+  if (req.user) {
+    console.log(mentorList.rows);
+    return res.render("mentor.ejs",{loginBool:true,mentors:mentorList.rows})
+  } else {
+    return res.render("mentor.ejs",{loginBool:false,mentors:mentorList.rows})
+  }
 });
 
-app.get("/pricing", (req, res) => {
- res.render("pricing.ejs",{loginBool:isloggedin})
+// app.get("/pricing", (req, res) => {
+//  res.render("pricing.ejs",{loginBool:isloggedin})
+// });
+
+app.get("/roadmaps",authenticateToken,(req, res) => {
+  if (req.user) {
+    return res.render("roadmaps.ejs",{loginBool:true})
+  } else {
+    return res.render("roadmaps.ejs",{loginBool:false})
+  }
 });
 
-app.get("/roadmaps", (req, res) => {
- res.render("roadmaps.ejs",{loginBool:isloggedin})
-});
-
-app.get("/library", async (req, res) => {
+app.get("/library",authenticateToken, async (req, res) => {
+  if (req.user) {
   const result=await axios.get("https://gutendex.com/books?topic=science")
     const libRenderData=[]
   result.data.results.forEach(element => {
@@ -56,10 +77,15 @@ app.get("/library", async (req, res) => {
     }
     libRenderData.push(data)
   });
-  res.render("library.ejs",{books:libRenderData,loginBool:isloggedin})
+  return res.render("library.ejs",{books:libRenderData,loginBool:true})
+}
+else{
+return res.redirect("/signup")
+}
 });
 
-app.get("/books/:id", async (req,res)=>{
+app.get("/books/:id",authenticateToken, async (req,res)=>{
+  if (req.user){
   const bookId =req.params.id
   const bookData=await axios.get(`https://gutendex.com/books/${bookId}`)
   const bookcontent=await axios.get(bookData.data.formats["text/plain; charset=utf-8"])
@@ -67,28 +93,43 @@ app.get("/books/:id", async (req,res)=>{
     title:bookData.data.title,
      materialSrc:bookcontent.data
   }
-  res.render("reader.ejs",{content:dataSend,loginBool:isloggedin})
+  res.render("reader.ejs",{content:dataSend,loginBool:true})
+}
+return res.redirect("/signup")
 })
 
-app.get("/signup", (req, res) => {
- res.render("signup.ejs",{loginBool:isloggedin})
+app.get("/signup",authenticateToken, (req, res) => {
+if (req.user){ 
+  return res.redirect("/dashboard")
+}else{
+  return res.render("signup.ejs",{loginBool:false})
+}
 });
 
-app.post("/signup", (req, res) => {
+app.post("/signup",authenticateToken, (req, res) => {
+  if (req.user){ 
+  return res.redirect("/dashboard")
+}else{
   const username=req.body.name;
   const email=req.body.email;
   const password=req.body.password;
-  bcrypt.hash(password,saltRounds,(err,hash)=>{
+  bcrypt.hash(password,saltRounds,async (err,hash)=>{
     if (err) {
       console.log(err)
     }
-  const addQuery=db.query("INSERT INTO users (username,email,password_hash) VALUES ($1,$2,$3)",[username,email,hash])
-  })
-  
+  const addQuery=await db.query("INSERT INTO users (username,email,password_hash) VALUES ($1,$2,$3) RETURNING id,username,email",[username,email,hash])
+  console.log(addQuery.rows[0]);
+  const accessToken=jwt.sign(addQuery.rows[0], process.env.ACCESS_TOKEN,{ expiresIn: '30d' })
+  res.cookie("token",accessToken)
   res.redirect("/dashboard")
 });
+}
+});
 
-app.post("/login",async (req, res) => {
+app.post("/login",authenticateToken,async (req, res) => {
+if (req.user){ 
+  return res.redirect("/dashboard")
+}else{
   const email = req.body.email;
   const loginPassword = req.body.password;
 
@@ -101,30 +142,58 @@ app.post("/login",async (req, res) => {
 
     const hashedPassword = userData.rows[0].password_hash;
     const passwordMatches = await bcrypt.compare(loginPassword, hashedPassword);
-    console.log(passwordMatches)
+    const userInfoJson=userData.rows[0]
     if (!passwordMatches) {
       return res.send("Incorrect password");
     }
-
-    res.redirect("/dashboard");
+    if (passwordMatches) {
+      const accessToken=jwt.sign({id:userInfoJson.id,email:userInfoJson.email}, process.env.ACCESS_TOKEN,{ expiresIn: '30d'})
+      res.cookie("token",accessToken)
+      res.redirect("/dashboard");
+    }
   } catch (err) {
     console.log(err);
     res.send("Something went wrong while logging in");
   }
+}
 });
 
-app.post("/increasexp",async (req,res)=>{
+app.post("/increasexp",authenticateToken,async (req,res)=>{
+  if (req.user){ 
   const xptoadd=req.body.xp;
+  const userid=req.user.id;
   try {
-    const addingXp=db.query("UPDATE users SET xp=xp+$1 WHERE id=2;",[xptoadd]);
+    const addingXp=db.query("UPDATE users SET xp=xp+$1 WHERE id=$2;",[xptoadd,userid]);
   } catch (error) {
     console.log(err)
   }
   res.sendStatus(200)
+}else{
+    return res.redirect("/signup")
+}
 })
-app.get("/login", (req, res) => {
-  res.render("login.ejs",{loginBool:isloggedin})
+
+app.get("/login", authenticateToken,(req, res) => {
+   if (req.user){ 
+    return res.redirect("/dashboard")
+   }else{
+    return res.render("login.ejs",{loginBool:false})
+   }
 });
+
+function authenticateToken(req,res,next) {
+  const authToken=req.cookies.token;
+  jwt.verify(authToken,process.env.ACCESS_TOKEN,(err,result)=>{
+    if (err) {
+      req.user = null;
+      return next();
+    }
+    else{
+      req.user=result;
+      next()
+    }
+  })
+}
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
