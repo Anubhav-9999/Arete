@@ -14,11 +14,10 @@
     </form>
   </div>
   <div class="books-grid" id="books-grid">
-    <% for (const book of books) {%>
+    <% for (const book of locals.books) {%>
     <div class="book-card" onclick="window.location.href='/books/<%= book.id %>'">
       <div class="book-cover" style="background:#ffc52b22">
         <img src="<%= book.cover_page %>" alt="<%= book.title %> cover" class="book-cover-img">
-        <div class="book-cover-label"></div>
       </div>
       <div class="book-info">
         <div class="book-title"><%= book.title %></div>

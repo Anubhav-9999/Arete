@@ -16,7 +16,8 @@
         <% if (content.error) { %>
           <div class="reader-error"><%= content.error %></div>
         <% } else { %>
-          <pre class="book-text"><%= content.materialSrc %></pre>
+          <div id="pdf-container" class="book-text">
+          </div>
         <% } %>
       </article>
     </section>
@@ -27,7 +28,15 @@
 
 </style>
 
-<script>
+<script type="module">
+import * as pdfjsLib from "/pdfjs/pdf.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdfjs/pdf.worker.mjs";
+
+const pdfPath = "<%= content.materialSrc %>";
+console.log(pdfPath);
+const loadingTask = pdfjsLib.getDocument({ url: pdfPath });
+const pdf = await loadingTask.promise;
+
 const reader = document.querySelector(".reader-content");
 const progressFill = document.getElementById("reader-progress-fill");
 let readerProgress = 0;
@@ -39,6 +48,29 @@ function bumpReaderProgress(step = 10) {
   }
 }
 
+const container = document.getElementById("pdf-container");
+console.log(pdf.numPages);
+
+
+for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+  const page = await pdf.getPage(pageNum);
+
+  const viewport = page.getViewport({ scale: 1.5 });
+
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+
+  container.appendChild(canvas);
+
+  await page.render({
+    canvasContext: context,
+    viewport,
+  }).promise;
+}
+ 
 let openTime = new Date();
 let totalTime=0
 let lastLoggedDecile = -1;
