@@ -2,19 +2,23 @@ import express from "express";
 import bodyParser from "body-parser";
 import axios, { isAxiosError } from "axios";
 import pg from "pg";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import 'dotenv/config';
-import jwt from "jsonwebtoken"
-import cookieParser from "cookie-parser"
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
+import path from "path"
+import { fileURLToPath } from "url";
 const app = express();
 const port = 3000;
 const saltRounds=10;
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser())
-
+app.use("/pdfjs",express.static(path.join(__dirname, "node_modules", "pdfjs-dist", "build"))
+);
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
@@ -65,15 +69,14 @@ app.get("/roadmaps",authenticateToken,(req, res) => {
 
 app.get("/library",authenticateToken, async (req, res) => {
   if (req.user) {
-  const result=await axios.get("https://gutendex.com/books?topic=science")
-    const libRenderData=[]
-  result.data.results.forEach(element => {
+  const result=await db.query("SELECT * FROM books")
+  let libRenderData=[]
+  result.rows.forEach(element => {
     let data ={
-      id:element.id,
-      author:element.authors[0].name,
+      id:element.book_id,
+      author:element.auther,
       title:element.title,
-      cover_page:element.formats['image/jpeg'],
-      content_link:element.formats['text/plain; charset=us-ascii']
+      cover_page:element.cover,
     }
     libRenderData.push(data)
   });
@@ -87,13 +90,16 @@ return res.redirect("/signup")
 app.get("/books/:id",authenticateToken, async (req,res)=>{
   if (req.user){
   const bookId =req.params.id
-  const bookData=await axios.get(`https://gutendex.com/books/${bookId}`)
-  const bookcontent=await axios.get(bookData.data.formats["text/plain; charset=utf-8"])
+  const bookData=await db.query("SELECT * FROM books WHERE book_id=$1",[bookId])
+  const bookRows=bookData.rows[0]
+  console.log(bookRows);
+  
   const dataSend={
-    title:bookData.data.title,
-     materialSrc:bookcontent.data
+    title:bookRows.title,
+    materialSrc:bookRows.bookpdf
   }
-  res.render("reader.ejs",{content:dataSend,loginBool:true})
+  console.log(req.user);
+  return res.render("reader.ejs",{content:dataSend,loginBool:true})
 }
 return res.redirect("/signup")
 })
@@ -118,7 +124,6 @@ app.post("/signup",authenticateToken, (req, res) => {
       console.log(err)
     }
   const addQuery=await db.query("INSERT INTO users (username,email,password_hash) VALUES ($1,$2,$3) RETURNING id,username,email",[username,email,hash])
-  console.log(addQuery.rows[0]);
   const accessToken=jwt.sign(addQuery.rows[0], process.env.ACCESS_TOKEN,{ expiresIn: '30d' })
   res.cookie("token",accessToken)
   res.redirect("/dashboard")
